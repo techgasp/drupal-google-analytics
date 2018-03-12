@@ -1,17 +1,14 @@
 INTRODUCTION
 --------
 
-Google Analytics Master auto adds Google Analytics tracking (web property classic, new universal web property  or custom tracking script) into to Drupal theme head or footer.
+Google Analytics Master is intended to be simple module that allows administrators to enable and insert Google Analytics tracking into a drupal powered website to generate statistics.
 
 If you experience any issues get in touch via support.
 
 FEATURES
 --------
 
-Web Property
-Tracking Code Script
-Theme head insertion
-Theme Footer insertion
+Send Statistics to Google Analytics via Web Property tracking Id
 Applies to all website
 
 REQUIREMENTS
@@ -31,14 +28,14 @@ INSTALLATION
 CONFIGURATION
 -------------
 
-The module has no menu or modifiable settings. There is no configuration. When
-enabled, the module will prevent the links from appearing. To get the links
-back, disable the module and clear caches.
+Configuration is available via Google Analytics Master module configuration by inserting your web element tracking Id.
+After enabling the module and inserting your tracking Id remember to clear caches.
 
 FUTURE ENHANCEMENTS
 -------------------
 
 Google Analytics login api.
+Google Analytics Tag Manager.
 Google Analytics statistics and graphs display.
 
 MAINTAINERS
