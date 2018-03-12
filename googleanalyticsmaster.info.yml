@@ -1,0 +1,7 @@
+name: 'Google Analytics Master'
+type: module
+description: 'Google Analytics Master auto adds Google Analytics tracking (web property classic, new universal web property  or custom tracking script) into to Drupal theme head or footer.'
+core: 8.x
+package: 'Statistics'
+
+configure: googleanalyticsmaster.form
