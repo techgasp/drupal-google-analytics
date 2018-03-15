@@ -1,7 +1,7 @@
 INTRODUCTION
 --------
 
-Google Analytics Master is intended to be simple module that allows administrators to enable and insert Google Analytics tracking into a drupal powered website to generate statistics.
+Google Analytics Master is intended to be a simple module to generate statistics that allows administrators to enable and insert Google Analytics tracking into a drupal theme head.
 
 If you experience any issues get in touch via support.
 

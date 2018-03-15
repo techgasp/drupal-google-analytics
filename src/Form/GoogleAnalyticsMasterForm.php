@@ -28,7 +28,7 @@ class GoogleAnalyticsMasterForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Insert Traking Id number:'),
       '#default_value' => $config->get('googleanalyticsmaster.tracking_id'),
-      '#description' => $this->t('if Tracking Id is selected above, insert it here.'),
+      '#description' => $this->t('insert your web element tracking id, like UA-********-**.'),
     );
     return $form;
   }
@@ -37,7 +37,9 @@ class GoogleAnalyticsMasterForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
+    if (empty($form_state->getValue('tracking_id'))) {
+      $form_state->setErrorByName('tracking_id', $this->t('Tracking Id can not be empty.'));
+    }
   }
 
   /**

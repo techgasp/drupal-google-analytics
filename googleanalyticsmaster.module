@@ -5,7 +5,6 @@
 */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Render\Markup;
 
 /**
  * Implements hook_help().
@@ -14,15 +13,15 @@ function googleanalyticsmaster_help($process_name, RouteMatchInterface $route_ma
   switch ($process_name) {
     case 'help.page.googleanalyticsmaster':
       $output_help = '<h3>' . t('About') . '</h3>';
-      $output_help .= '<p>' . t('Google Analytics Master is intended to be simple module that allows administrators to enable and insert Google Analytics tracking into a drupal powered website to generate statistics.') . '</p>';
-      $output_help .= '<p>' . t('Google Analytics Master uses the new google analytics api based on https://googletagmanager.com/gtag/js.') . '</p>';
+      $output_help .= '<p>' . t('Google Analytics Master is intended to be simple module to generate statistics that allows administrators to enable and insert Google Analytics tracking into a drupal head.') . '</p>';
+      $output_help .= '<p>' . t('Google Analytics Master uses the new google analytics api based on analytics.js.') . '</p>';
       $output_help .= '<h3>' . t('Options') . '</h3>';
       $output_help .= '<p>' . t('Just insert your web element tracking id in Google Analytics Master settings page.') . '</p>';
       $output_help .= '<h3>' . t('Configuration') . '</h3>';
       $output_help .= '<p>' . t('All settings are available via module settings page, link below.') . '</p>';
       $output_help .= '<p>' . t('Get your tracking id <a href=":ga_url">Google Analytics Website</a>.', [':ga_url' => 'https://www.google.com/analytics/']) . '</p>';
       $output_help .= '<h3>' . t('More') . '</h3>';
-      $output_help .= '<p>' . t('Future versions may include google tag manager and the display of statistics via google analytics api.') . '</p>';
+      $output_help .= '<p>' . t('Future versions may include google tag manager and the display of statistics via google user and analytics api.') . '</p>';
       return $output_help;
   }
 }
@@ -33,35 +32,23 @@ function googleanalyticsmaster_help($process_name, RouteMatchInterface $route_ma
 function googleanalyticsmaster_page_attachments(&$page) {
   //get module settings
   $settings = \Drupal::config('googleanalyticsmaster.settings');
-  $location = $settings->get('googleanalyticsmaster.location');
-  $insertion_type = $settings->get('googleanalyticsmaster.insertion_type');
   $tracking_id = $settings->get('googleanalyticsmaster.tracking_id');
-  $tracking_script = $settings->get('googleanalyticsmaster.tracking_script');
   //set spacer
   $tracking_spacer = "'";
 
-  // Build analytics script for web element head.
-  $web_element_head = 'https://www.googletagmanager.com/gtag/js?id='.$tracking_id.'';
-  $page['#attached']['html_head'][] = [
-  [
-    '#tag' => 'script',
-    '#attributes' => array('src' => $web_element_head),
-    '#weight' => '15',
-  ],
-    'googleanalyticsmaster_web_element_head',
-  ];
-
   // Build analytics script for web element body.
-  $web_element_body = 'window.dataLayer = window.dataLayer || [];';
-  $web_element_body .= 'function gtag(){dataLayer.push(arguments);}';
-  $web_element_body .= 'gtag('.$tracking_spacer.'js'.$tracking_spacer.', new Date());';
-  $web_element_body .= 'gtag('.$tracking_spacer.'config'.$tracking_spacer.', '.$tracking_spacer.$tracking_id.$tracking_spacer.');';
- 
+  $web_element_body = '(function(i,s,o,g,r,a,m){i['.$tracking_spacer.'GoogleAnalyticsObject'.$tracking_spacer.']=r;i[r]=i[r]||function(){';
+  $web_element_body .= '(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),';
+  $web_element_body .= 'm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)';
+  $web_element_body .= '})(window,document,'.$tracking_spacer.'script'.$tracking_spacer.','.$tracking_spacer.'https://www.google-analytics.com/analytics.js'.$tracking_spacer.','.$tracking_spacer.'ga'.$tracking_spacer.');';
+  $web_element_body .= 'ga('.$tracking_spacer.'create'.$tracking_spacer.', '.$tracking_spacer.$tracking_id.$tracking_spacer.', '.$tracking_spacer.'auto'.$tracking_spacer.');';
+  $web_element_body .= 'ga('.$tracking_spacer.'send'.$tracking_spacer.', '.$tracking_spacer.'pageview'.$tracking_spacer.');';
+
   $page['#attached']['html_head'][] = [
   [
     '#tag' => 'script',
     '#value' => $web_element_body,
-    '#weight' => '16',
+    '#weight' => '15',
   ],
     'googleanalyticsmaster_web_element_body',
   ];
